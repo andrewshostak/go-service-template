@@ -8,6 +8,7 @@ import (
 	"github.com/andrewshostak/awesome-service/service"
 	"github.com/caarlos0/env/v6"
 	"github.com/gin-gonic/gin"
+	timeout "github.com/vearne/gin-timeout"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"time"
@@ -20,7 +21,7 @@ type serverConfig struct {
 	PgPassword string `env:"PG_PASSWORD"`
 	PgPort     string `env:"PG_PORT" envDefault:"5432"`
 	PgDatabase string `env:"PG_DATABASE" envDefault:"postgres"`
-	Timeout    int    `env:"TIMEOUT" envDefault:"30"`
+	Timeout    int    `env:"TIMEOUT" envDefault:"10"`
 }
 
 func StartServer() {
@@ -31,7 +32,10 @@ func StartServer() {
 
 	r := gin.Default()
 	r.Use(middleware.ErrorHandle())
-	r.Use(middleware.Timeout(time.Duration(config.Timeout) * time.Second))
+	r.Use(timeout.Timeout(
+		timeout.WithTimeout(time.Duration(config.Timeout)*time.Second),
+		timeout.WithDefaultMsg(`{"error": "timeout error"}`),
+	))
 
 	connectionParams := fmt.Sprintf(
 		"host=%s user=%s password=%s port=%s database=%s sslmode=disable",
