@@ -15,13 +15,13 @@ import (
 )
 
 type serverConfig struct {
-	Port       string `env:"PORT" envDefault:"8080"`
-	PgHost     string `env:"PG_HOST" envDefault:"localhost"`
-	PgUser     string `env:"PG_USER" envDefault:"postgres"`
-	PgPassword string `env:"PG_PASSWORD"`
-	PgPort     string `env:"PG_PORT" envDefault:"5432"`
-	PgDatabase string `env:"PG_DATABASE" envDefault:"postgres"`
-	Timeout    int    `env:"TIMEOUT" envDefault:"10"`
+	Port       string        `env:"PORT" envDefault:"8080"`
+	PgHost     string        `env:"PG_HOST" envDefault:"localhost"`
+	PgUser     string        `env:"PG_USER" envDefault:"postgres"`
+	PgPassword string        `env:"PG_PASSWORD"`
+	PgPort     string        `env:"PG_PORT" envDefault:"5432"`
+	PgDatabase string        `env:"PG_DATABASE" envDefault:"postgres"`
+	Timeout    time.Duration `env:"TIMEOUT" envDefault:"10s"`
 }
 
 func StartServer() {
@@ -33,7 +33,7 @@ func StartServer() {
 	r := gin.Default()
 	r.Use(middleware.ErrorHandle())
 	r.Use(timeout.Timeout(
-		timeout.WithTimeout(time.Duration(config.Timeout)*time.Second),
+		timeout.WithTimeout(config.Timeout),
 		timeout.WithDefaultMsg(`{"error": "timeout error"}`),
 	))
 
@@ -62,5 +62,5 @@ func StartServer() {
 	r.POST("/questions", questionHandler.Create)
 	r.GET("/questions", questionHandler.List)
 
-	r.Run()
+	r.Run(fmt.Sprintf(":%s", config.Port))
 }
