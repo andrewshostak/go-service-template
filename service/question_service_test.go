@@ -17,15 +17,15 @@ func TestQuestionService_Update_Success(t *testing.T) {
 
 	id := uint(123)
 	toUpdate := model.QuestionUpdate{Title: "new title", IsAnswered: true}
-	mapped := toUpdate.MapToQuestion(id)
-	expected := model.Question{ID: id, Title: mapped.Title, IsAnswered: mapped.IsAnswered}
+	question := mapToRepositoryModel(toUpdate.MapToQuestion(id))
+	expected := repository.Question{ID: id, Title: question.Title, IsAnswered: question.IsAnswered}
 
-	repo.On("One", ctx, id).Return(&model.Question{}, nil).Once()
-	repo.On("Update", ctx, mapped).Return(&expected, nil).Once()
+	repo.On("One", ctx, id).Return(&repository.Question{}, nil).Once()
+	repo.On("Update", ctx, question).Return(&expected, nil).Once()
 
 	result, err := service.Update(ctx, id, toUpdate)
 	assert.Nil(t, err)
-	assert.Equal(t, expected, *result)
+	assert.Equal(t, *mapFromRepositoryModel(&expected), *result)
 }
 
 func TestQuestionService_Update_One_Error(t *testing.T) {
@@ -51,11 +51,11 @@ func TestQuestionService_Update_Error(t *testing.T) {
 
 	id := uint(123)
 	toUpdate := model.QuestionUpdate{Title: "new title", IsAnswered: true}
-	mapped := toUpdate.MapToQuestion(id)
+	question := mapToRepositoryModel(toUpdate.MapToQuestion(id))
 	repoErr := errs.New(errors.New("update error"), errs.UserError)
 
-	repo.On("One", ctx, id).Return(&model.Question{}, nil).Once()
-	repo.On("Update", ctx, mapped).Return(nil, repoErr).Once()
+	repo.On("One", ctx, id).Return(&repository.Question{}, nil).Once()
+	repo.On("Update", ctx, question).Return(nil, repoErr).Once()
 
 	result, err := service.Update(ctx, id, toUpdate)
 	assert.Equal(t, repoErr, err)

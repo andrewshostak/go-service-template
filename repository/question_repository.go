@@ -12,11 +12,11 @@ import (
 const ErrDuplicateUnique = "duplicate key value violates unique constraint"
 
 type QuestionRepo interface {
-	Create(ctx context.Context, question model.Question) (*model.Question, error)
+	Create(ctx context.Context, question Question) (*Question, error)
 	Delete(ctx context.Context, id uint) error
-	List(ctx context.Context) ([]model.Question, error)
-	One(ctx context.Context, id uint) (*model.Question, error)
-	Update(ctx context.Context, question model.Question) (*model.Question, error)
+	List(ctx context.Context) ([]Question, error)
+	One(ctx context.Context, id uint) (*Question, error)
+	Update(ctx context.Context, question Question) (*Question, error)
 }
 
 type questionRepo struct {
@@ -27,7 +27,7 @@ func NewQuestionRepo(db *gorm.DB) QuestionRepo {
 	return &questionRepo{db: db}
 }
 
-func (r *questionRepo) Create(ctx context.Context, question model.Question) (*model.Question, error) {
+func (r *questionRepo) Create(ctx context.Context, question Question) (*Question, error) {
 	if result := r.db.WithContext(ctx).Create(&question); result.Error != nil {
 		if strings.Contains(result.Error.Error(), ErrDuplicateUnique) {
 			return nil, errs.New(result.Error, errs.UserError)
@@ -51,8 +51,8 @@ func (r *questionRepo) Delete(ctx context.Context, id uint) error {
 	return nil
 }
 
-func (r *questionRepo) List(ctx context.Context) ([]model.Question, error) {
-	var questions []model.Question
+func (r *questionRepo) List(ctx context.Context) ([]Question, error) {
+	var questions []Question
 	if result := r.db.WithContext(ctx).Find(&questions); result.Error != nil {
 		return nil, result.Error
 	}
@@ -60,8 +60,8 @@ func (r *questionRepo) List(ctx context.Context) ([]model.Question, error) {
 	return questions, nil
 }
 
-func (r *questionRepo) One(ctx context.Context, id uint) (*model.Question, error) {
-	var question model.Question
+func (r *questionRepo) One(ctx context.Context, id uint) (*Question, error) {
+	var question Question
 	if result := r.db.WithContext(ctx).First(&question, id); result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			return nil, errs.New(result.Error, errs.UserError)
@@ -72,7 +72,7 @@ func (r *questionRepo) One(ctx context.Context, id uint) (*model.Question, error
 	return &question, nil
 }
 
-func (r *questionRepo) Update(ctx context.Context, question model.Question) (*model.Question, error) {
+func (r *questionRepo) Update(ctx context.Context, question Question) (*Question, error) {
 	if result := r.db.WithContext(ctx).Save(&question); result.Error != nil {
 		if strings.Contains(result.Error.Error(), ErrDuplicateUnique) {
 			return nil, errs.New(result.Error, errs.UserError)

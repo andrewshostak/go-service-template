@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/andrewshostak/awesome-service/model"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -31,7 +30,7 @@ func TestQuestionRepo_List_Success(t *testing.T) {
 	result, err := repo.List(context.Background())
 
 	assert.Nil(t, err)
-	assert.Equal(t, result, []model.Question{{1, "test", true}})
+	assert.Equal(t, result, []Question{{1, "test", true}})
 }
 
 func TestQuestionRepo_List_Error(t *testing.T) {

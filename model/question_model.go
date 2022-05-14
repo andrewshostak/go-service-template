@@ -1,7 +1,7 @@
 package model
 
 type Question struct {
-	ID         uint   `gorm:"primaryKey" json:"id"`
+	ID         uint   `json:"id"`
 	Title      string `json:"title"`
 	IsAnswered bool   `json:"is_answered"`
 }
