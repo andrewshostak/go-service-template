@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/andrewshostak/awesome-service/model"
-	"github.com/andrewshostak/awesome-service/repository"
+	"github.com/andrewshostak/go-service-template/model"
+	"github.com/andrewshostak/go-service-template/repository"
 )
 
 type QuestionService interface {

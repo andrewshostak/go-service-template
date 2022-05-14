@@ -1,7 +1,7 @@
 package main
 
-import "github.com/andrewshostak/awesome-service/server"
+import "github.com/andrewshostak/go-service-template/server"
 
-func main()  {
+func main() {
 	server.StartServer()
 }

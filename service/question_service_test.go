@@ -3,9 +3,9 @@ package service
 import (
 	"context"
 	"errors"
-	"github.com/andrewshostak/awesome-service/errs"
-	"github.com/andrewshostak/awesome-service/model"
-	"github.com/andrewshostak/awesome-service/repository"
+	"github.com/andrewshostak/go-service-template/errs"
+	"github.com/andrewshostak/go-service-template/model"
+	"github.com/andrewshostak/go-service-template/repository"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

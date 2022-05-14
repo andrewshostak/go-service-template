@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 	"errors"
-	"github.com/andrewshostak/awesome-service/errs"
-	"github.com/andrewshostak/awesome-service/model"
+	"github.com/andrewshostak/go-service-template/errs"
+	"github.com/andrewshostak/go-service-template/model"
 	"gorm.io/gorm"
 	"strings"
 )

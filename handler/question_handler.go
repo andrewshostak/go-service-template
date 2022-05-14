@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"github.com/andrewshostak/awesome-service/errs"
-	"github.com/andrewshostak/awesome-service/model"
-	"github.com/andrewshostak/awesome-service/service"
+	"github.com/andrewshostak/go-service-template/errs"
+	"github.com/andrewshostak/go-service-template/model"
+	"github.com/andrewshostak/go-service-template/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

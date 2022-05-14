@@ -2,10 +2,10 @@ package server
 
 import (
 	"fmt"
-	"github.com/andrewshostak/awesome-service/handler"
-	"github.com/andrewshostak/awesome-service/middleware"
-	"github.com/andrewshostak/awesome-service/repository"
-	"github.com/andrewshostak/awesome-service/service"
+	"github.com/andrewshostak/go-service-template/handler"
+	"github.com/andrewshostak/go-service-template/middleware"
+	"github.com/andrewshostak/go-service-template/repository"
+	"github.com/andrewshostak/go-service-template/service"
 	"github.com/caarlos0/env/v6"
 	"github.com/gin-gonic/gin"
 	timeout "github.com/vearne/gin-timeout"

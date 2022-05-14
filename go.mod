@@ -1,4 +1,4 @@
-module github.com/andrewshostak/awesome-service
+module github.com/andrewshostak/go-service-template
 
 go 1.16
 
