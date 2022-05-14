@@ -8,7 +8,7 @@ import (
 	"github.com/andrewshostak/go-service-template/service"
 	"github.com/caarlos0/env/v6"
 	"github.com/gin-gonic/gin"
-	timeout "github.com/vearne/gin-timeout"
+	"github.com/vearne/gin-timeout"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"time"
@@ -31,11 +31,11 @@ func StartServer() {
 	}
 
 	r := gin.Default()
-	r.Use(middleware.ErrorHandle())
 	r.Use(timeout.Timeout(
 		timeout.WithTimeout(config.Timeout),
 		timeout.WithDefaultMsg(`{"error": "timeout error"}`),
 	))
+	r.Use(middleware.ErrorHandle())
 
 	connectionParams := fmt.Sprintf(
 		"host=%s user=%s password=%s port=%s database=%s sslmode=disable",
